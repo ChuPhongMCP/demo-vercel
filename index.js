@@ -22,8 +22,8 @@ app.use(cookieParser());
 app.use('/public', express.static(path.join(__dirname, 'public')));
 
 
-// mongoose.connect(`${process.env.DATABASE_URL}${process.env.DATABASE_NAME}`)
-mongoose.connect("mongodb+srv://piorentina:aspirine12@cluster0.ayixjtb.mongodb.net/batch31-nodejs-database")
+mongoose.connect(`${process.env.DATABASE_URL}${process.env.DATABASE_NAME}`)
+// mongoose.connect("mongodb+srv://piorentina:aspirine12@cluster0.ayixjtb.mongodb.net/batch31-nodejs-database")
 
 app.use("/categories", categoryRouter)
 
