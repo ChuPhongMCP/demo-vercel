@@ -6,14 +6,15 @@ const logger = require('morgan');
 
 const { default: mongoose } = require('mongoose')
 require('dotenv').config();
+
 const categoryRouter = require('./routes/category/router')
-// const { Category } = require('./models');
+const indexRouter = require('./routes/index')
 
 const app = express()
 const port = 9000
 
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'jade');
+// app.set('views', path.join(__dirname, 'views'));
+// app.set('view engine', 'jade');
 
 app.use(logger('dev'));
 app.use(express.json());
@@ -23,8 +24,8 @@ app.use('/public', express.static(path.join(__dirname, 'public')));
 
 
 mongoose.connect(`${process.env.DATABASE_URL}${process.env.DATABASE_NAME}`)
-// mongoose.connect("mongodb+srv://piorentina:aspirine12@cluster0.ayixjtb.mongodb.net/batch31-nodejs-database")
 
+app.use("/", indexRouter)
 app.use("/categories", categoryRouter)
 
 app.listen(port, () => {
