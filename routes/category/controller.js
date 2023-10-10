@@ -26,7 +26,7 @@ module.exports = {
             const results = await Category.findOne(conditionFind);
 
             if (!results) {
-                return res.send(200, { message: `Không tìm thấy danh mục sản phẩm nào có ID là: ${id}` });
+                return res.send(404, { message: `Không tìm thấy danh mục sản phẩm nào có ID là: ${id}` });
             }
 
             return res.send(200, { message: "Tìm kiếm thành công", payload: results });
@@ -48,7 +48,7 @@ module.exports = {
             if (getNameExits) errors.push(' Danh mục sản phẩm đã tồn tại');
 
             if (errors.length > 0) {
-                return res.status(200).json({
+                return res.status(400).json({
                     message: `Thêm danh mục sản phẩm không thành công, ${errors}`,
                 });
             }
@@ -88,7 +88,7 @@ module.exports = {
             }
 
             if (errors.length > 0) {
-                return res.send(200, { message: `Cập nhật danh mục sản phẩm thất bại, ${errors}` })
+                return res.send(400, { message: `Cập nhật danh mục sản phẩm thất bại, ${errors}` })
             }
 
             const updateCategory = await Category.findOneAndUpdate(
@@ -98,7 +98,7 @@ module.exports = {
             );
 
             if (!updateCategory) {
-                return res.send(200, { message: `Không tìm thấy danh mục sản phẩm có ID: ${id}` })
+                return res.send(404, { message: `Không tìm thấy danh mục sản phẩm có ID: ${id}` })
             }
 
             return res.send(200, { message: "Cập nhật danh mục sản phẩm thành công", payload: updateCategory })
@@ -124,7 +124,7 @@ module.exports = {
             );
 
             if (!result) {
-                return res.send(200, { message: `Không tìm thấy danh mục sản phẩm có ID: ${id}` });
+                return res.send(404, { message: `Không tìm thấy danh mục sản phẩm có ID: ${id}` });
             }
 
             return res.send(200, { message: "Xóa danh mục sản phẩm thành công", payload: result });
@@ -150,7 +150,7 @@ module.exports = {
             );
 
             if (!result) {
-                return res.send(200, { message: `danh mục sản phẩm có ID: ${id} không tìm thấy hoặc đã khôi phục rồi` });
+                return res.send(400, { message: `danh mục sản phẩm có ID: ${id} không tìm thấy hoặc đã khôi phục rồi` });
             }
 
             return res.send(200, { message: "Khôi phục danh mục sản phẩm thành công", payload: result });
