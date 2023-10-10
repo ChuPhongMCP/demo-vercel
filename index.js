@@ -3,12 +3,21 @@ const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
+const passport = require('passport');
 
 const { default: mongoose } = require('mongoose')
 require('dotenv').config();
 
-const categoryRouter = require('./routes/category/router')
 const indexRouter = require('./routes/index')
+const categoryRouter = require('./routes/category/router')
+const employeeRouter = require('./routes/employee/router')
+const authEmployeeRouter = require('./routes/authEmployee/router')
+
+const {
+  passportVerifyToken,
+  passportVerifyAccount,
+  // passportConfigBasic,
+} = require('./middlewares/passport');
 
 const app = express()
 const port = 9000
@@ -25,8 +34,13 @@ app.use('/public', express.static(path.join(__dirname, 'public')));
 
 mongoose.connect(`${process.env.DATABASE_URL}${process.env.DATABASE_NAME}`)
 
+passport.use(passportVerifyToken);
+passport.use(passportVerifyAccount);
+
 app.use("/", indexRouter)
 app.use("/categories", categoryRouter)
+app.use("/employees", employeeRouter)
+app.use("/authEmployee", authEmployeeRouter)
 
 app.listen(port, () => {
   console.log(`Starting on port ${port}`)

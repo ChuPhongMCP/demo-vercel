@@ -1,5 +1,9 @@
 const Category = require('./Category')
 
+const Employee = require('./Employee');
+
 module.exports = {
-    Category
+    Category,
+
+    Employee
 }
