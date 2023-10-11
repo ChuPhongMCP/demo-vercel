@@ -3,7 +3,7 @@ const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
-// const cors = require('cors');
+const cors = require('cors');
 const multer = require('multer');
 const passport = require('passport');
 const { default: mongoose } = require('mongoose')
@@ -36,11 +36,11 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use('/public', express.static(path.join(__dirname, 'public')));
 
-// app.use(
-//   cors({
-//     origin: '*',
-//   }),
-// );
+app.use(
+  cors({
+    origin: '*',
+  }),
+);
 
 mongoose.connect(`${process.env.DATABASE_URL}${process.env.DATABASE_NAME}`)
 
